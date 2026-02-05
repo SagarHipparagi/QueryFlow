@@ -1,10 +1,24 @@
-flask
-flask-cors
-pymysql
-python-dotenv
-langchain-community
-langchain-openai
+# Web Framework
+Flask>=3.0.0
+Flask-Cors>=4.0.0
+gunicorn>=21.2.0
+requests>=2.31.0
+
+# Database & Config
+PyMySQL>=1.1.0
+python-dotenv>=1.0.0
+
+# AI & Vector Store
+# Pin langchain families to recent stables but allow updates
+langchain-community>=0.0.10
+langchain-openai>=0.0.5
+
+# Embeddings & Search
+# sentence-transformers>=2.6.0 ensures better compatibility with modern torch/numpy
+sentence-transformers>=2.6.0
 faiss-cpu
-sentence-transformers
-requests
-gunicorn
+
+# CRITICAL CONSTRAINTS
+# numpy 2.0.0 is new and breaks many ML libraries. Pinning <2.0.0 prevents
+# "ResolutionImpossible" when some libs want old numpy and some want new.
+numpy<2.0.0
