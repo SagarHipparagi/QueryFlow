@@ -18,11 +18,15 @@ COPY requirements_api.txt .
 # Upgrade pip
 RUN pip install --no-cache-dir --upgrade pip
 
-# Layer 1: Install Numpy 1.26.4 (The Stability Standard)
-# This specific version is compatible with almost everything (Torch, Pandas, etc)
-RUN pip install --no-cache-dir "numpy==1.26.4"
+# Layer 1: Install PyTorch CPU (Pre-installing this is KEY to avoiding conflicts)
+# We use the official CPU wheels to keep image small and solver happy
+RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
-# Layer 2: Install ML Deps
+# Layer 2: Install Numpy (Stability)
+RUN pip install --no-cache-dir "numpy<2.0.0"
+
+# Layer 3: Install ML Deps
+# sentence-transformers will see torch is already installed and skip it
 RUN pip install --no-cache-dir \
     sentence-transformers \
     faiss-cpu
