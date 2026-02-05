@@ -1,7 +1,25 @@
-flask
-flask-cors
-pymysql
-python-dotenv
-requests
-gunicorn
-# ML libs moved to Dockerfile layers to manage build order
+# Core Web Server
+Flask==3.1.2
+flask-cors==6.0.2
+gunicorn==21.2.0
+requests==2.32.5
+python-dotenv==1.2.1
+PyMySQL==1.1.2
+
+# 2026 AI/ML Stack (Exact Match from local environment)
+numpy==2.4.1
+pydantic==2.12.5
+pydantic-core==2.41.5
+langchain==1.2.7
+langchain-core==1.2.7
+langchain-community==0.4.1
+langchain-openai==1.1.7
+sentence-transformers==5.2.2
+faiss-cpu==1.13.2
+
+# Explicitly use CPU version for Linux/Render
+--index-url https://pypi.org/simple
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.10.0
+torchvision==0.20.0
+torchaudio==2.5.0

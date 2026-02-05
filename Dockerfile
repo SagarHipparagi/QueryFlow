@@ -1,50 +1,31 @@
-# Use python 3.11 which is more stable for current ML libraries than 3.12
-FROM python:3.11-slim
+# Use Python 3.12 to match building locally in 2026
+FROM python:3.12-slim
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
 # Install system dependencies
+# libgomp1 is required for faiss-cpu on Linux
 RUN apt-get update && apt-get install -y \
     gcc \
     python3-dev \
     default-libmysqlclient-dev \
     pkg-config \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy the specific requirements file first to leverage Docker cache
+# Upgrade pip to the latest 2026 version to avoid solver issues
+RUN pip install --no-cache-dir --upgrade pip==26.0.1 setuptools wheel
+
+# Install dependencies using exact pins from requirements_api.txt
 COPY requirements_api.txt .
-
-# Upgrade pip
-RUN pip install --no-cache-dir --upgrade pip
-
-# Layer 1: Install PyTorch CPU (Pre-installing this is KEY to avoiding conflicts)
-# We use the official CPU wheels to keep image small and solver happy
-RUN pip install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-# Layer 2: Install Numpy (Stability)
-RUN pip install --no-cache-dir "numpy<2.0.0"
-
-# Layer 3: Install ML Deps
-# sentence-transformers will see torch is already installed and skip it
-RUN pip install --no-cache-dir \
-    sentence-transformers \
-    faiss-cpu
-
-# Layer 3: Install LangChain (AI Orchestration)
-RUN pip install --no-cache-dir \
-    langchain-community \
-    langchain-openai
-
-# Layer 4: Install Web Framework & Utilities (Flask, etc)
 RUN pip install --no-cache-dir -r requirements_api.txt
 
-# Copy the rest of the backend application code
+# Copy application code
 COPY . .
 
-# Expose the port (Render will override this, but good for documentation)
+# Expose port
 EXPOSE 8000
 
-# Run the application with Gunicorn
-# Bind to 0.0.0.0 because it's running inside a container
+# Start command
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "api_server:app"]
