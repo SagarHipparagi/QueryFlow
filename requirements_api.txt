@@ -2,11 +2,13 @@ flask
 flask-cors
 pymysql
 python-dotenv
-langchain
+# Core AI dependencies - removed meta 'langchain' package to avoid conflicts
 langchain-community
 langchain-openai
+# Vector store and embeddings
 faiss-cpu
 sentence-transformers
+# Application server
 requests
 gunicorn
-protobuf
+# Protobuf is transitive, let pip resolve it
