@@ -1,14 +1,13 @@
-flask
-flask-cors
-pymysql
-python-dotenv
-# Core AI dependencies - removed meta 'langchain' package to avoid conflicts
-langchain-community
-langchain-openai
-# Vector store and embeddings
+Flask>=3.0.0
+Flask-Cors>=4.0.0
+PyMySQL>=1.1.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+gunicorn>=21.2.0
+# AI dependencies
+langchain-community>=0.0.30
+langchain-openai>=0.1.0
+sentence-transformers>=2.6.0
 faiss-cpu
-sentence-transformers
-# Application server
-requests
-gunicorn
-# Protobuf is transitive, let pip resolve it
+# Constraints to prevent conflicts
+numpy<2.0.0
