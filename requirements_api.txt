@@ -1,11 +1,21 @@
-flask
-flask-cors
-pymysql
-python-dotenv
-langchain-openai
-langchain-community
-sentence-transformers
-faiss-cpu
-requests
-gunicorn
-numpy<2.0.0
+# EXACT VERSIONS FROM LOCAL SUCCESSFUL BUILD (PYTHON 3.12)
+# The key is numpy==1.26.4 which works with Python 3.12 in this ecosystem.
+
+flask==3.1.2
+flask-cors==6.0.2
+pymysql==1.1.2
+python-dotenv==1.2.1
+requests==2.32.5
+gunicorn==25.0.1
+
+# AI Stack
+numpy==1.26.4
+pydantic==2.12.5
+langchain-community==0.4.1
+langchain-openai==1.1.7
+sentence-transformers==5.2.2
+faiss-cpu==1.13.2
+
+# PyTorch (CPU version for Linux/Render)
+--index-url https://download.pytorch.org/whl/cpu
+torch==2.10.0

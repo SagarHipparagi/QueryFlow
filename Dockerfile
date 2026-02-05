@@ -1,6 +1,6 @@
 ```dockerfile
-# Use Python 3.11 for maximum ML compatibility
-FROM python:3.11-slim
+# Use Python 3.12 to match verified local environment
+FROM python:3.12-slim
 
 # Set working directory
 WORKDIR /app
