@@ -2,9 +2,6 @@ flask
 flask-cors
 pymysql
 python-dotenv
-langchain-community
-langchain-openai
-faiss-cpu
-sentence-transformers
 requests
 gunicorn
+# ML libs moved to Dockerfile layers to manage build order
