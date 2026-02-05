@@ -9,7 +9,7 @@ services:
     startCommand: gunicorn api_server:app
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.12
+        value: 3.12.4
     # The following environment variables must be set in the Render Dashboard:
     # - GROQ_API_KEY
     # - DB_HOST
