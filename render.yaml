@@ -4,12 +4,12 @@ services:
   # --------------------------------------------------------------------------------
   - type: web
     name: askdb-api
-    env: python
-    buildCommand: pip install --upgrade pip && pip install "numpy<2.0.0" && pip install -r requirements_api.txt
-    startCommand: gunicorn api_server:app
+    env: docker
+    dockerContext: .
+    dockerfilePath: Dockerfile
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.12
+        value: 3.12.4
     # The following environment variables must be set in the Render Dashboard:
     # - GROQ_API_KEY
     # - DB_HOST
