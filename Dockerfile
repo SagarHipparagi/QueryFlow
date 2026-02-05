@@ -1,3 +1,4 @@
+```dockerfile
 # Use Python 3.12 to match building locally in 2026
 FROM python:3.12-slim
 
@@ -14,17 +15,18 @@ RUN apt-get update && apt-get install -y \
     libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip to the latest 2026 version to avoid solver issues
-RUN pip install --no-cache-dir --upgrade pip==26.0.1 setuptools wheel
+# Upgrade pip and install uv for robust resolution
+RUN pip install --no-cache-dir --upgrade pip uv
 
-# Install dependencies using exact pins from requirements_api.txt
+# Install dependencies using uv (much better solver for frozen lists)
+# We use --system to install into the container's python environment
 COPY requirements_api.txt .
-RUN pip install --no-cache-dir -r requirements_api.txt
+RUN uv pip install --no-cache-dir --system -r requirements_api.txt
 
-# Copy application code
+# Copy the rest of the application code
 COPY . .
 
-# Expose port
+# Expose the port
 EXPOSE 8000
 
 # Start command
