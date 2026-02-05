@@ -1,0 +1,32 @@
+# Python virtual environment
+venv/
+env/
+ENV/
+
+# Environment variables and secrets
+.env
+.env.*
+secret_key.py
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
